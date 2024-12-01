@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// extracts a double precision floating point number
 double extractNumeric(const string &str) {
     bool hasDecimal = false;
     bool hasDigits = false;
@@ -32,6 +33,39 @@ double extractNumeric(const string &str) {
         }
     }
 
+    // checks if input contains digits
+    if (!hasDigits) {
+        return -999999.99;
+    }
+
+    // convert numeric to a double
+    double result = 0;
+    bool isDecimal = false;
+    double decimalFactor = 0.1;
+
+    for (int i = 0; i < numericPart.length(); i++) {
+        char c = numericPart[i];
+
+        if (c == '.') {
+            isDecimal = true;
+        } else if (c == '+' || c == '-') {
+            continue; 
+        } else if (isDecimal) {
+            result += (c - '0') * decimalFactor;
+            decimalFactor *= 0.1;
+        } else {
+            result = result * 10 + (c - '0');
+        }
+    }
+
+    // negative numbers
+    if (numericPart[0] == '-') {
+        result = -result;
+    }
+
+    return result;
+}
+
 int main() {
     string input;
 
@@ -54,3 +88,4 @@ int main() {
 
     return 0;
 }
+
