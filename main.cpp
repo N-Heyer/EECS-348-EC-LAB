@@ -4,6 +4,34 @@
 
 using namespace std;
 
+double extractNumeric(const string &str) {
+    bool hasDecimal = false;
+    bool hasDigits = false;
+    string numericPart = "";
+
+    for (int i = 0; i < str.length(); i++) {
+        char c = str[i];
+
+        
+        if (isdigit(c)) {
+            numericPart += c;
+            hasDigits = true;
+        }
+        
+        else if (c == '.' && !hasDecimal) {
+            numericPart += c;
+            hasDecimal = true;
+        }
+        // + or - 
+        else if ((c == '+' || c == '-') && i == 0) {
+            numericPart += c;
+        }
+        // invalid char
+        else {
+            return -999999.99;
+        }
+    }
+
 int main() {
     string input;
 
